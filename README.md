@@ -115,7 +115,7 @@
 =
 \mathrm{mean}(\mathrm{achieved} \mid \mathrm{category}=c)
 ```
-- 各クエスト \(i\) のカテゴリを \(c_i\) とすると
+- 各クエスト `i` のカテゴリを `c_i` とすると
 ```math
 \mathrm{succ}_i
 =
@@ -133,7 +133,7 @@
 実装の `_normalize_0_1()` により min-max 正規化します（全て同値なら 0）。
 
 ```math
-x^{(n)}
+x^{n}
 =
 \frac{x - \min(x)}{\max(x) - \min(x)}
 ```
@@ -145,22 +145,22 @@ x^{(n)}
 ```math
 \mathrm{base}_i
 =
-w_{\mathrm{sim}} \cdot \mathrm{sim}^{(n)}_i
+w_{\mathrm{sim}} \cdot \mathrm{sim}^{n}_i
 +
-w_{\mathrm{succ}} \cdot \mathrm{succ}^{(n)}_i
+w_{\mathrm{succ}} \cdot \mathrm{succ}^{n}_i
 +
-w_{\mathrm{imp}} \cdot \mathrm{imp}^{(n)}_i
+w_{\mathrm{imp}} \cdot \mathrm{imp}^{n}_i
 ```
 
 デフォルト重み：
 ```math
 \mathrm{base}_i
 =
-0.60 \cdot \mathrm{sim}^{(n)}_i
+0.60 \cdot \mathrm{sim}^{n}_i
 +
-0.20 \cdot \mathrm{succ}^{(n)}_i
+0.20 \cdot \mathrm{succ}^{n}_i
 +
-0.20 \cdot \mathrm{imp}^{(n)}_i
+0.20 \cdot \mathrm{imp}^{n}_i
 ```
 
 #### 5) 多様性リランキング（MMR）で exploit を4件選ぶ
@@ -172,7 +172,7 @@ MMR の選択値（実装の形）：
 ```math
 \mathrm{val}(i)
 =
-\lambda \cdot \mathrm{sim}^{(n)}_i
+\lambda \cdot \mathrm{sim}^{n}_i
 +
 (1-\lambda) \cdot \mathrm{base}_i
 -
@@ -186,7 +186,7 @@ MMR の選択値（実装の形）：
 ```math
 \arg\max_i
 \left(
-\lambda \cdot \mathrm{sim}^{(n)}_i
+\lambda \cdot \mathrm{sim}^{n}_i
 +
 (1-\lambda) \cdot \mathrm{base}_i
 \right)
@@ -220,13 +220,13 @@ exploit で選んだ4件を除いた `remaining` から、探索用スコア `ex
 ```math
 \mathrm{explore\_score}_i
 =
-0.45 \cdot (1 - \mathrm{rem\_sim}^{(n)}_i)
+0.45 \cdot (1 - \mathrm{rem\_sim}^{n}_i)
 +
-0.25 \cdot (1 - \mathrm{exposure}^{(n)}_i)
+0.25 \cdot (1 - \mathrm{exposure}^{n}_i)
 +
-0.15 \cdot \mathrm{diff}^{(n)}_i
+0.15 \cdot \mathrm{diff}^{n}_i
 +
-0.15 \cdot \mathrm{imp}^{(n)}_i
+0.15 \cdot \mathrm{imp}^{n}_i
 ```
 
 その中で最大の1件を採用（`argmax`）し、`reason="explore"` を付与します。
